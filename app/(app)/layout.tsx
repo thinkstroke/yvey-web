@@ -2,13 +2,13 @@
 
 import { usePathname } from 'next/navigation';
 
-const colors = {
-  bg: '#111009',
-  card: '#1C1914',
-  gold: '#C7AB78',
-  cream: '#F5F2EE',
-  muted: '#807A74',
-  divider: '#332F29',
+const c = {
+  bg:      '#0E0C09',
+  card:    '#181410',
+  gold:    '#C7AB78',
+  cream:   '#F5F2EE',
+  muted:   '#807A74',
+  divider: '#2A251E',
 };
 
 const NAV_LINKS = [
@@ -23,11 +23,17 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: colors.bg }}>
+    <div style={{ minHeight: '100vh', backgroundColor: c.bg }}>
+      {/* Google Fonts */}
+      <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Barlow:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+      />
+
       {/* Navigation */}
       <nav style={{
-        backgroundColor: colors.card,
-        borderBottom: `1px solid ${colors.divider}`,
+        backgroundColor: c.card,
+        borderBottom: `1px solid ${c.divider}`,
         padding: '0 32px',
         display: 'flex',
         alignItems: 'center',
@@ -35,8 +41,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         height: 64,
       }}>
         <a href="/" style={{
-          fontSize: 18, fontWeight: 700, color: colors.gold,
+          fontSize: 16, fontWeight: 600, color: c.gold,
           letterSpacing: 6, textDecoration: 'none',
+          fontFamily: "'Barlow', sans-serif",
         }}>
           YVEY
         </a>
@@ -45,26 +52,24 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             const isActive = pathname === link.href ||
               (link.href !== '/' && pathname.startsWith(link.href));
             return (
-              <a
-                key={link.href}
-                href={link.href}
+              <a key={link.href} href={link.href}
                 style={{
-                  color: isActive ? colors.gold : colors.muted,
+                  color: isActive ? c.gold : c.muted,
                   textDecoration: 'none',
-                  fontSize: 13,
+                  fontSize: 12,
                   fontWeight: 600,
-                  letterSpacing: 1.5,
+                  letterSpacing: 2,
                   transition: 'color 0.2s',
-                }}
-              >
-                {link.label.toUpperCase()}
+                  fontFamily: "'Barlow', sans-serif",
+                  textTransform: 'uppercase' as const,
+                }}>
+                {link.label}
               </a>
             );
           })}
         </div>
       </nav>
 
-      {/* Page content */}
       {children}
     </div>
   );

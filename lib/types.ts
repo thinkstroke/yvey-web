@@ -1,18 +1,8 @@
-export type EventType =
-  | 'popup' | 'workshop' | 'editorial' | 'vip' | 'virtual';
-
-export type EventStatus =
-  | 'upcoming' | 'cancelled' | 'rescheduled' | 'completed';
-
+export type EventType = 'popup' | 'workshop' | 'editorial' | 'vip' | 'virtual';
+export type EventStatus = 'upcoming' | 'cancelled' | 'rescheduled' | 'completed';
 export type RsvpStatus = 'confirmed' | 'waitlist' | 'cancelled';
-
-export type UserRole = 'admin' | 'stylist' | 'member';
-
 export type NotificationType =
-  | 'rsvp_confirmed'
-  | 'event_cancelled'
-  | 'event_rescheduled'
-  | 'event_reminder';
+  | 'rsvp_confirmed' | 'event_cancelled' | 'event_rescheduled' | 'event_reminder';
 
 export interface Event {
   id: string;
@@ -21,6 +11,7 @@ export interface Event {
   type: EventType;
   location: string;
   virtual_link?: string;
+  image_url?: string;
   date: string;
   time: string;
   end_time?: string;
@@ -41,6 +32,7 @@ export interface EventRsvp {
   user_id: string;
   status: RsvpStatus;
   created_at: string;
+  profiles?: { full_name: string; email: string; hair_type?: string };
 }
 
 export interface EventNotification {
