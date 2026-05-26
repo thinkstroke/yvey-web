@@ -1,6 +1,8 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { createClient } from '../../lib/supabase';
 
 const c = {
   bg:      '#0E0C09',
@@ -21,6 +23,22 @@ const NAV_LINKS = [
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (!user) return;
+      supabase
+        .from('user_roles')
+        .select('role')
+        .eq('id', user.id)
+        .single()
+        .then(({ data }) => {
+          if (data?.role === 'admin') setIsAdmin(true);
+        });
+    });
+  }, []);
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: c.bg }}>
@@ -67,6 +85,16 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               </a>
             );
           })}
+          {isAdmin && (
+            <a href="/admin/products" style={{
+              color: c.gold, textDecoration: 'none',
+              fontSize: 11, fontWeight: 600, letterSpacing: 2,
+              fontFamily: "'Barlow', sans-serif",
+              opacity: 0.8,
+            }}>
+              ADMIN &#x2197;
+            </a>
+          )}
         </div>
       </nav>
 

@@ -45,3 +45,32 @@ export interface EventNotification {
   created_at: string;
   events?: { title: string };
 }
+
+// ── Products ────────────────────────────────────────────────────────
+
+export type ProductCategory =
+  | 'haircare' | 'skincare' | 'styling' | 'ritual_kits';
+
+export interface ProductVariant {
+  name: string;
+  price: number;
+}
+
+export interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  compare_price?: number | null;
+  category: ProductCategory;
+  image_url?: string | null;
+  images: string[];
+  variants: ProductVariant[];
+  stock: number;
+  is_featured: boolean;
+  is_active: boolean;
+  tags: string[];
+  created_by?: string;
+  created_at: string;
+  updated_at: string;
+}
